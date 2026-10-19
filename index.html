@@ -1,0 +1,840 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#102d3a">
+  <meta name="description" content="Trouvez un professionnel du bâtiment et prenez rendez-vous en ligne avec NEXORA.">
+  <title>NEXORA — Le bâtiment, simplement.</title>
+  <style>
+    :root {
+      --navy: #102d3a;
+      --teal: #087e80;
+      --mint: #e7f5f1;
+      --paper: #f7f9f8;
+      --white: #ffffff;
+      --ink: #23343b;
+      --muted: #687b80;
+      --border: #dce6e5;
+      --radius: 16px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Inter, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: var(--paper);
+      line-height: 1.6;
+    }
+
+    button, input, select, textarea { font: inherit; }
+    button { cursor: pointer; }
+
+    .container {
+      width: min(1120px, calc(100% - 40px));
+      margin: auto;
+    }
+
+    header {
+      background: white;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav {
+      min-height: 76px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .logo {
+      font-size: 25px;
+      font-weight: 850;
+      letter-spacing: 2px;
+      color: var(--navy);
+    }
+
+    .logo span { color: var(--teal); }
+
+    .nav-note {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .hero {
+      padding: 76px 0 58px;
+      background:
+        radial-gradient(ellipse at 90% 10%, #d9eeea 0%, transparent 42%),
+        var(--paper);
+    }
+
+    .eyebrow {
+      color: var(--teal);
+      text-transform: uppercase;
+      font-size: 12px;
+      letter-spacing: 2px;
+      font-weight: 800;
+    }
+
+    h1 {
+      max-width: 760px;
+      margin: 12px 0;
+      color: var(--navy);
+      font-size: clamp(36px, 5.6vw, 60px);
+      line-height: 1.08;
+      letter-spacing: -2px;
+    }
+
+    .intro {
+      max-width: 600px;
+      color: var(--muted);
+      font-size: 17px;
+      margin: 18px 0 30px;
+    }
+
+    .search-box {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 20px;
+      display: grid;
+      grid-template-columns: 1fr 1fr auto;
+      align-items: end;
+      gap: 14px;
+      box-shadow: 0 12px 36px #102d3a0a;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 7px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    input, select, textarea {
+      width: 100%;
+      border: 1px solid var(--border);
+      background: white;
+      border-radius: 10px;
+      padding: 12px;
+      color: var(--ink);
+      min-width: 0;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: 2px solid #8ad0c6;
+      outline-offset: 1px;
+    }
+
+    .btn {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      border: 0;
+      border-radius: 10px;
+      padding: 12px 19px;
+      background: var(--teal);
+      color: white;
+      font-weight: 750;
+      transition: background .2s, transform .2s;
+    }
+
+    .btn:hover { background: #066a6c; }
+    .btn:active { transform: scale(.98); }
+
+    .btn-dark { background: var(--navy); }
+    .btn-dark:hover { background: #1b4656; }
+
+    .btn-light {
+      color: var(--navy);
+      background: var(--mint);
+    }
+
+    .btn-light:hover { background: #d6ebe5; }
+
+    .section { padding: 48px 0 72px; }
+
+    .section-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 16px;
+      margin-bottom: 22px;
+    }
+
+    h2 {
+      color: var(--navy);
+      margin: 0;
+      font-size: clamp(24px, 3vw, 32px);
+      line-height: 1.2;
+    }
+
+    .muted { color: var(--muted); }
+    .small { font-size: 13px; }
+
+    .filters {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 22px;
+    }
+
+    .filter {
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 8px 15px;
+      color: var(--navy);
+      background: white;
+    }
+
+    .filter.active {
+      background: var(--navy);
+      color: white;
+      border-color: var(--navy);
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .pro-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 21px;
+      background: white;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .pro-top {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+    }
+
+    .avatar {
+      width: 52px;
+      height: 52px;
+      flex: 0 0 52px;
+      display: grid;
+      place-items: center;
+      border-radius: 15px;
+      background: var(--mint);
+      color: var(--teal);
+      font-size: 22px;
+    }
+
+    .pro-card h3 {
+      margin: 0;
+      color: var(--navy);
+      font-size: 17px;
+      line-height: 1.35;
+    }
+
+    .rating { color: #9a6a0a; font-size: 13px; }
+
+    .tag {
+      display: inline-block;
+      background: var(--mint);
+      color: #126464;
+      border-radius: 6px;
+      padding: 4px 8px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .services {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .slot-list {
+      display: flex;
+      gap: 7px;
+      flex-wrap: wrap;
+    }
+
+    .slot {
+      border: 1px solid #acd6cd;
+      background: #f1faf7;
+      color: #126464;
+      border-radius: 8px;
+      padding: 7px 10px;
+      font-size: 13px;
+    }
+
+    .slot:hover, .slot.selected {
+      background: var(--teal);
+      border-color: var(--teal);
+      color: white;
+    }
+
+    .pro-card .btn { margin-top: auto; }
+
+    .notice {
+      background: #fff8e8;
+      color: #765b20;
+      padding: 12px 15px;
+      border-radius: 10px;
+      font-size: 13px;
+      margin-top: 22px;
+    }
+
+    .empty {
+      grid-column: 1 / -1;
+      padding: 42px 20px;
+      text-align: center;
+      background: white;
+      border: 1px dashed var(--border);
+      border-radius: var(--radius);
+    }
+
+    footer {
+      background: var(--navy);
+      color: white;
+      padding: 30px 0;
+    }
+
+    footer p { margin: 5px 0; }
+    footer .muted { color: #c4d4d8; }
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: #0b202bb8;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      z-index: 10;
+      overflow-y: auto;
+    }
+
+    .modal-backdrop.open { display: flex; }
+
+    .modal {
+      width: min(520px, 100%);
+      max-height: 92vh;
+      overflow-y: auto;
+      background: white;
+      border-radius: 18px;
+      padding: 25px;
+      box-shadow: 0 25px 80px #0002;
+    }
+
+    .modal-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      gap: 16px;
+    }
+
+    .modal-head h2 { font-size: 25px; }
+
+    .close {
+      border: 0;
+      background: var(--paper);
+      border-radius: 50%;
+      width: 38px;
+      height: 38px;
+      font-size: 22px;
+      flex: 0 0 38px;
+    }
+
+    .form-grid {
+      display: grid;
+      gap: 14px;
+      margin: 20px 0;
+    }
+
+    .summary {
+      padding: 14px;
+      background: var(--mint);
+      border-radius: 12px;
+      margin: 17px 0;
+    }
+
+    .success { text-align: center; padding: 18px 0; }
+    .success-icon { font-size: 46px; }
+
+    [hidden] { display: none !important; }
+
+    @media (max-width: 800px) {
+      .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .search-box { grid-template-columns: 1fr 1fr; }
+      .search-box .btn { grid-column: 1 / -1; }
+      .hero { padding-top: 52px; }
+    }
+
+    @media (max-width: 540px) {
+      .container { width: min(100% - 28px, 1120px); }
+      .cards { grid-template-columns: 1fr; }
+      .search-box { grid-template-columns: 1fr; padding: 15px; }
+      .search-box .btn { grid-column: auto; width: 100%; }
+      .nav-note { font-size: 12px; text-align: right; }
+      .section-heading { align-items: start; flex-direction: column; }
+      h1 { letter-spacing: -1px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <div class="logo">NEX<span>ORA</span></div>
+      <div class="nav-note">Les bons professionnels, au bon moment.</div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <div class="eyebrow">Le bâtiment, simplement.</div>
+        <h1>Vos travaux commencent par le bon rendez-vous.</h1>
+        <p class="intro">
+          Trouvez un professionnel près de chez vous, découvrez ses
+          prestations et choisissez un créneau en quelques clics.
+        </p>
+
+        <form class="search-box" id="searchForm">
+          <div>
+            <label for="trade">Quel professionnel recherchez-vous ?</label>
+            <select id="trade">
+              <option value="Tous">Tous les métiers</option>
+              <option value="Plombier">Plombier</option>
+              <option value="Électricien">Électricien</option>
+              <option value="Peintre">Peintre</option>
+            </select>
+          </div>
+          <div>
+            <label for="city">Où ?</label>
+            <input id="city" type="text" placeholder="Ex. : Genève, Annemasse">
+          </div>
+          <button class="btn" type="submit">Rechercher →</button>
+        </form>
+        <p class="small muted">
+          Prototype de démonstration · Les professionnels affichés sont fictifs.
+        </p>
+      </div>
+    </section>
+
+    <section class="section" id="results">
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <div class="eyebrow">Notre sélection</div>
+            <h2 id="resultsTitle">Des professionnels pour vos projets</h2>
+          </div>
+          <span class="muted small" id="count"></span>
+        </div>
+
+        <div class="filters" aria-label="Filtrer par métier">
+          <button class="filter active" data-filter="Tous" type="button">Tous</button>
+          <button class="filter" data-filter="Plombier" type="button">🔧 Plomberie</button>
+          <button class="filter" data-filter="Électricien" type="button">⚡ Électricité</button>
+          <button class="filter" data-filter="Peintre" type="button">🎨 Peinture</button>
+        </div>
+
+        <div class="cards" id="cards" aria-live="polite"></div>
+
+        <div class="notice">
+          Démonstration : les notes, prix, profils et disponibilités sont
+          des données fictives. Aucune réservation réelle n'est effectuée.
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="logo" style="color:white">NEX<span>ORA</span></div>
+      <p>Un rendez-vous plus simple pour tous les projets du bâtiment.</p>
+      <p class="muted small">Prototype en cours de développement · 2026</p>
+    </div>
+  </footer>
+
+  <div class="modal-backdrop" id="modalBackdrop" role="dialog"
+       aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal">
+      <div class="modal-head">
+        <div>
+          <div class="eyebrow">NEXORA · Réservation test</div>
+          <h2 id="modalTitle">Profil professionnel</h2>
+        </div>
+        <button class="close" id="closeModal" type="button"
+                aria-label="Fermer">×</button>
+      </div>
+      <div id="modalContent"></div>
+    </div>
+  </div>
+
+  <script>
+    // Données de démonstration : aucun de ces profils n'est réel.
+    const professionals = [
+      {
+        id: 1, name: "Jean Martin", company: "JM Plomberie",
+        trade: "Plombier", icon: "🔧", city: "Annemasse",
+        rating: "4,9", reviews: 28, distance: "2,4 km",
+        services: ["Fuite d'eau", "Débouchage", "Robinetterie"],
+        price: "Dès 70 €", slots: ["10:00", "14:00", "16:30"],
+        about: "Démonstration de profil de plomberie générale."
+      },
+      {
+        id: 2, name: "Sophie Bernard", company: "Élec & Vous",
+        trade: "Électricien", icon: "⚡", city: "Genève",
+        rating: "4,8", reviews: 19, distance: "3,1 km",
+        services: ["Panne électrique", "Prise", "Interrupteur"],
+        price: "Dès 65 CHF", slots: ["09:30", "13:00", "15:30"],
+        about: "Démonstration de profil d'électricité générale."
+      },
+      {
+        id: 3, name: "Thomas Petit", company: "Peinture Pro",
+        trade: "Peintre", icon: "🎨", city: "Annemasse",
+        rating: "4,9", reviews: 14, distance: "4,2 km",
+        services: ["Mur", "Plafond", "Retouches"],
+        price: "Devis nécessaire", slots: ["11:00", "14:30", "17:00"],
+        about: "Démonstration de profil de peinture intérieure."
+      },
+      {
+        id: 4, name: "Alexandre Morel", company: "AM Dépannage",
+        trade: "Plombier", icon: "🔧", city: "Genève",
+        rating: "4,7", reviews: 32, distance: "5,0 km",
+        services: ["Chauffe-eau", "Fuite d'eau", "Robinetterie"],
+        price: "Dès 80 CHF", slots: ["08:30", "12:00", "16:00"],
+        about: "Démonstration de profil de dépannage plomberie."
+      },
+      {
+        id: 5, name: "Camille Robert", company: "Courant Design",
+        trade: "Électricien", icon: "⚡", city: "Annemasse",
+        rating: "4,8", reviews: 21, distance: "3,8 km",
+        services: ["Tableau électrique", "Prise", "Panne électrique"],
+        price: "Dès 75 €", slots: ["10:30", "13:30", "17:00"],
+        about: "Démonstration de profil d'installation électrique."
+      },
+      {
+        id: 6, name: "Emma Laurent", company: "Couleurs & Matières",
+        trade: "Peintre", icon: "🎨", city: "Genève",
+        rating: "4,9", reviews: 17, distance: "2,9 km",
+        services: ["Pièce complète", "Mur", "Retouches"],
+        price: "Devis nécessaire", slots: ["09:00", "11:30", "15:00"],
+        about: "Démonstration de profil de peinture et finitions."
+      }
+    ];
+
+    const cards = document.getElementById("cards");
+    const tradeInput = document.getElementById("trade");
+    const cityInput = document.getElementById("city");
+    const resultsTitle = document.getElementById("resultsTitle");
+    const count = document.getElementById("count");
+    const modalBackdrop = document.getElementById("modalBackdrop");
+    const modalContent = document.getElementById("modalContent");
+
+    let activeFilter = "Tous";
+    let selectedProfessional = null;
+
+    function escapeHTML(value) {
+      return String(value).replace(/[&<>"']/g, char => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;",
+        '"': "&quot;", "'": "&#39;"
+      })[char]);
+    }
+
+    function filteredProfessionals() {
+      const trade = tradeInput.value;
+      const city = cityInput.value.trim().toLocaleLowerCase("fr");
+
+      return professionals.filter(pro => {
+        const matchesTrade =
+          (activeFilter === "Tous" || pro.trade === activeFilter) &&
+          (trade === "Tous" || pro.trade === trade);
+
+        const matchesCity =
+          !city || pro.city.toLocaleLowerCase("fr").includes(city);
+
+        return matchesTrade && matchesCity;
+      });
+    }
+
+    function renderCards() {
+      const list = filteredProfessionals();
+      count.textContent = list.length + " profil(s) de démonstration";
+
+      const selectedTrade = tradeInput.value;
+      resultsTitle.textContent =
+        selectedTrade === "Tous"
+          ? "Des professionnels pour vos projets"
+          : selectedTrade + "s près de chez vous";
+
+      cards.innerHTML = "";
+
+      if (!list.length) {
+        cards.innerHTML = `
+          <div class="empty">
+            <h3>Aucun résultat pour cette recherche</h3>
+            <p class="muted">Essayez une autre ville ou un autre métier.</p>
+            <button class="btn btn-light" id="resetSearch" type="button">
+              Réinitialiser la recherche
+            </button>
+          </div>`;
+        document.getElementById("resetSearch").addEventListener("click", () => {
+          tradeInput.value = "Tous";
+          cityInput.value = "";
+          activeFilter = "Tous";
+          updateFilterButtons();
+          renderCards();
+        });
+        return;
+      }
+
+      list.forEach(pro => {
+        const article = document.createElement("article");
+        article.className = "pro-card";
+
+        article.innerHTML = `
+          <div class="pro-top">
+            <div class="avatar" aria-hidden="true">${pro.icon}</div>
+            <div>
+              <h3>${escapeHTML(pro.name)}</h3>
+              <div class="muted small">${escapeHTML(pro.company)}</div>
+              <div class="rating">★ ${pro.rating} · ${pro.reviews} avis fictifs</div>
+            </div>
+          </div>
+          <div><span class="tag">${escapeHTML(pro.trade)}</span></div>
+          <div class="muted small">📍 ${escapeHTML(pro.city)} · ${pro.distance}</div>
+          <div class="services">
+            ${pro.services.map(s => `<span class="tag">${escapeHTML(s)}</span>`).join("")}
+          </div>
+          <div><strong>${escapeHTML(pro.price)}</strong></div>
+          <div>
+            <div class="small muted" style="margin-bottom:8px">Créneaux de démonstration</div>
+            <div class="slot-list">
+              ${pro.slots.map(slot =>
+                `<button class="slot" type="button"
+                  data-pro="${pro.id}" data-slot="${slot}"
+                  aria-label="Choisir ${slot} avec ${escapeHTML(pro.name)}">${slot}</button>`
+              ).join("")}
+            </div>
+          </div>
+          <button class="btn btn-dark profile-button" type="button"
+            data-pro="${pro.id}">Voir le profil et réserver →</button>
+        `;
+
+        cards.appendChild(article);
+      });
+
+      cards.querySelectorAll(".profile-button").forEach(button => {
+        button.addEventListener("click", () => {
+          openProfile(Number(button.dataset.pro));
+        });
+      });
+
+      cards.querySelectorAll(".slot").forEach(button => {
+        button.addEventListener("click", () => {
+          openProfile(Number(button.dataset.pro), button.dataset.slot);
+        });
+      });
+    }
+
+    function updateFilterButtons() {
+      document.querySelectorAll(".filter").forEach(button => {
+        const active = button.dataset.filter === activeFilter;
+        button.classList.toggle("active", active);
+        button.setAttribute("aria-pressed", String(active));
+      });
+    }
+
+    function openProfile(id, chosenSlot = "") {
+      selectedProfessional = professionals.find(pro => pro.id === id);
+      if (!selectedProfessional) return;
+
+      const pro = selectedProfessional;
+      const safeName = escapeHTML(pro.name);
+
+      modalContent.innerHTML = `
+        <div class="summary">
+          <strong>${safeName}</strong><br>
+          ${escapeHTML(pro.company)} · ${escapeHTML(pro.trade)}<br>
+          📍 ${escapeHTML(pro.city)} · ${pro.distance}<br>
+          <strong>${escapeHTML(pro.price)}</strong>
+        </div>
+        <p>${escapeHTML(pro.about)}</p>
+        <p class="small muted">Prestations proposées dans cette démo :</p>
+        <div class="services">
+          ${pro.services.map(s => `<span class="tag">${escapeHTML(s)}</span>`).join("")}
+        </div>
+        <form id="bookingForm" class="form-grid">
+          <div>
+            <label for="service">Prestation souhaitée</label>
+            <select id="service" required>
+              ${pro.services.map(s =>
+                `<option value="${escapeHTML(s)}">${escapeHTML(s)}</option>`
+              ).join("")}
+            </select>
+          </div>
+          <div>
+            <label for="bookingDate">Date souhaitée</label>
+            <input id="bookingDate" type="date" required>
+          </div>
+          <div>
+            <label>Choisissez un créneau fictif</label>
+            <div class="slot-list" id="modalSlots">
+              ${pro.slots.map(slot => `
+                <button type="button" class="slot ${slot === chosenSlot ? "selected" : ""}"
+                  data-slot="${slot}" aria-pressed="${slot === chosenSlot}">
+                  ${slot}
+                </button>`).join("")}
+            </div>
+          </div>
+          <div>
+            <label for="customerName">Votre nom</label>
+            <input id="customerName" autocomplete="name" required
+              maxlength="100" placeholder="Prénom et nom">
+          </div>
+          <div>
+            <label for="customerEmail">Votre e-mail</label>
+            <input id="customerEmail" type="email" autocomplete="email"
+              required maxlength="254" placeholder="vous@exemple.fr">
+          </div>
+          <div>
+            <label for="customerAddress">Ville ou quartier d'intervention</label>
+            <input id="customerAddress" required maxlength="150"
+              placeholder="Ex. : centre-ville">
+          </div>
+          <div>
+            <label for="problem">Décrivez votre besoin (facultatif)</label>
+            <textarea id="problem" rows="3" maxlength="1000"
+              placeholder="Expliquez brièvement votre demande…"></textarea>
+          </div>
+          <p class="small muted">
+            Les informations saisies restent dans cette démonstration.
+            N'utilisez pas de données personnelles réelles.
+          </p>
+          <button class="btn" type="submit">Simuler la réservation</button>
+        </form>
+      `;
+
+      const dateInput = document.getElementById("bookingDate");
+      const today = new Date();
+      const localToday = [
+        today.getFullYear(),
+        String(today.getMonth() + 1).padStart(2, "0"),
+        String(today.getDate()).padStart(2, "0")
+      ].join("-");
+      dateInput.min = localToday;
+      dateInput.value = localToday;
+
+      let selectedSlot = chosenSlot;
+
+      document.querySelectorAll("#modalSlots .slot").forEach(button => {
+        button.addEventListener("click", () => {
+          selectedSlot = button.dataset.slot;
+          document.querySelectorAll("#modalSlots .slot").forEach(slotButton => {
+            const active = slotButton.dataset.slot === selectedSlot;
+            slotButton.classList.toggle("selected", active);
+            slotButton.setAttribute("aria-pressed", String(active));
+          });
+        });
+      });
+
+      document.getElementById("bookingForm").addEventListener("submit", event => {
+        event.preventDefault();
+
+        if (!selectedSlot) {
+          alert("Veuillez sélectionner un créneau.");
+          return;
+        }
+
+        const chosenDate = dateInput.value;
+        if (!chosenDate || chosenDate < localToday) {
+          alert("Veuillez choisir une date valide.");
+          return;
+        }
+
+        const dateParts = chosenDate.split("-").map(Number);
+        const readableDate = new Date(
+          dateParts[0], dateParts[1] - 1, dateParts[2]
+        ).toLocaleDateString("fr-FR", {
+          day: "numeric", month: "long", year: "numeric"
+        });
+
+        const service = document.getElementById("service").value;
+
+        modalContent.innerHTML = `
+          <div class="success">
+            <div class="success-icon" aria-hidden="true">✓</div>
+            <h2>Simulation terminée !</h2>
+            <p>Votre parcours de réservation fonctionne.</p>
+          </div>
+          <div class="summary">
+            <strong>${safeName}</strong><br>
+            ${escapeHTML(service)}<br>
+            ${escapeHTML(readableDate)} à ${escapeHTML(selectedSlot)}
+          </div>
+          <p class="small muted">
+            Ceci n'est pas un rendez-vous réel. Rien n'a été transmis
+            ni enregistré sur un serveur.
+          </p>
+          <button type="button" class="btn" id="finishBooking"
+            style="width:100%">Retour aux professionnels</button>
+        `;
+
+        document.getElementById("finishBooking").addEventListener("click", closeModal);
+      });
+
+      modalBackdrop.classList.add("open");
+      document.getElementById("closeModal").focus();
+    }
+
+    function closeModal() {
+      modalBackdrop.classList.remove("open");
+      selectedProfessional = null;
+    }
+
+    document.getElementById("searchForm").addEventListener("submit", event => {
+      event.preventDefault();
+      activeFilter = "Tous";
+      updateFilterButtons();
+      renderCards();
+      document.getElementById("results").scrollIntoView({ behavior: "smooth" });
+    });
+
+    tradeInput.addEventListener("change", () => {
+      activeFilter = "Tous";
+      updateFilterButtons();
+      renderCards();
+    });
+
+    document.querySelectorAll(".filter").forEach(button => {
+      button.addEventListener("click", () => {
+        activeFilter = button.dataset.filter;
+        tradeInput.value = "Tous";
+        updateFilterButtons();
+        renderCards();
+      });
+    });
+
+    document.getElementById("closeModal").addEventListener("click", closeModal);
+
+    modalBackdrop.addEventListener("click", event => {
+      if (event.target === modalBackdrop) closeModal();
+    });
+
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape") closeModal();
+    });
+
+    renderCards();
+  </script>
+</body>
+</html>
