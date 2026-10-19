@@ -481,6 +481,22 @@
 
   <script>
     // Données de démonstration : aucun de ces profils n'est réel.
+    
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+  const SUPABASE_URL = "https://adijgwrarkbxlpiuzogb.supabase.co";
+  const SUPABASE_KEY = "sb_publishable_4bZs0UZopkUOhZhYAe2EVw_8VClTd4m";
+
+  const supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
+
+  console.log("NEXORA : Supabase initialisé");
+
+  // Données de démonstration : aucun de ces profils n'est réel.
+
     const professionals = [
       {
         id: 1, name: "Jean Martin", company: "JM Plomberie",
@@ -836,19 +852,8 @@
 
     renderCards();
     
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 
   </script>
 </body>
 </html>
-
-const SUPABASE_URL = "https://adijgwrarkbxlpiuzogb.supabase.co";
-const SUPABASE_KEY = "sb_publishable_4bZs0UZopkUOhZhYAe2EVw_8VClTd4m";
-
-const supabaseClient = window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
-);
-
-console.log("NEXORA : Supabase initialisé");
-
