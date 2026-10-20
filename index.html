@@ -930,6 +930,27 @@
 
     renderCards();
     
+async function registerFixUser(firstName, lastName, email, phone, password, accountType) {
+  const { data, error } = await supabaseClient.auth.signUp({
+    email: email,
+    password: password,
+    options: {
+      emailRedirectTo: "https://racheldrm.github.io/FIXIT/",
+      data: {
+        full_name: `${firstName} ${lastName}`,
+        phone: phone,
+        requested_account_type: accountType
+      }
+    }
+  });
+
+  if (error) {
+    throw error;
+  }
+
+  return data;
+}
+
     // Fenêtre d'inscription FIX
     const signupModal = document.getElementById("signupModal");
     const signupButton = document.getElementById("signupButton");
