@@ -549,7 +549,7 @@
                autocomplete="new-password">
       </div>
 
-      <button class="btn" type="submit" disabled>
+     <button class="btn" type="submit">
         Créer mon compte
       </button>
 
@@ -950,6 +950,44 @@ async function registerFixUser(firstName, lastName, email, phone, password, acco
 
   return data;
 }
+
+document.getElementById("signupForm").addEventListener("submit", async (event) => {
+  event.preventDefault();
+
+  const form = event.currentTarget;
+  const button = form.querySelector('button[type="submit"]');
+
+  const firstName = document.getElementById("signupFirstName").value.trim();
+  const lastName = document.getElementById("signupLastName").value.trim();
+  const email = document.getElementById("signupEmail").value.trim();
+  const phone = document.getElementById("signupPhone").value.trim();
+  const password = document.getElementById("signupPassword").value;
+  const accountType = document.getElementById("accountType").value;
+
+  button.disabled = true;
+  button.textContent = "Création en cours...";
+
+  try {
+    await registerFixUser(
+      firstName, lastName, email, phone, password, accountType
+    );
+
+    alert(
+      "Votre demande d'inscription a été envoyée ! " +
+      "Consultez vos e-mails pour confirmer votre compte."
+    );
+
+    form.reset();
+    closeSignupModal();
+
+  } catch (error) {
+    alert("Inscription impossible : " + error.message);
+
+  } finally {
+    button.disabled = false;
+    button.textContent = "Créer mon compte";
+  }
+});
 
     // Fenêtre d'inscription FIX
     const signupModal = document.getElementById("signupModal");
