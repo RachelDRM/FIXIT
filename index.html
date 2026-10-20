@@ -490,7 +490,78 @@
       <div id="modalContent"></div>
     </div>
   </div>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<!-- Fenêtre d'inscription FIX -->
+<div class="modal-backdrop" id="signupModal"
+     role="dialog" aria-modal="true"
+     aria-labelledby="signupTitle">
+  <div class="modal">
+    <div class="modal-head">
+      <div>
+        <div class="eyebrow">Bienvenue sur FIX</div>
+        <h2 id="signupTitle">Créer mon compte</h2>
+      </div>
+      <button class="close" id="closeSignup"
+              type="button" aria-label="Fermer">×</button>
+    </div>
+
+    <p class="muted small">
+      Inscrivez-vous pour gérer vos rendez-vous simplement.
+    </p>
+
+    <form id="signupForm" class="form-grid">
+      <div>
+        <label for="accountType">Vous êtes :</label>
+        <select id="accountType" required>
+          <option value="client">Je suis un particulier</option>
+          <option value="professional">Je suis un professionnel</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="signupFirstName">Prénom</label>
+        <input id="signupFirstName" required
+               autocomplete="given-name" maxlength="60">
+      </div>
+
+      <div>
+        <label for="signupLastName">Nom</label>
+        <input id="signupLastName" required
+               autocomplete="family-name" maxlength="60">
+      </div>
+
+      <div>
+        <label for="signupEmail">Adresse e-mail</label>
+        <input id="signupEmail" type="email" required
+               autocomplete="email">
+      </div>
+
+      <div>
+        <label for="signupPhone">Téléphone</label>
+        <input id="signupPhone" type="tel"
+               autocomplete="tel">
+      </div>
+
+      <div>
+        <label for="signupPassword">Mot de passe</label>
+        <input id="signupPassword" type="password"
+               required minlength="8"
+               autocomplete="new-password">
+      </div>
+
+      <button class="btn" type="submit" disabled>
+        Créer mon compte
+      </button>
+
+      <p class="small muted">
+        L'inscription sera activée après la connexion
+        sécurisée du formulaire à Supabase.
+      </p>
+    </form>
+  </div>
+</div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
   const SUPABASE_URL = "https://adijgwrarkbxlpiuzogb.supabase.co";
   const SUPABASE_KEY = "sb_publishable_4bZs0UZopkUOhZhYAe2EVw_8VClTd4m";
