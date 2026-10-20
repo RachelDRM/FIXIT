@@ -930,6 +930,34 @@
 
     renderCards();
     
+    // Fenêtre d'inscription FIX
+    const signupModal = document.getElementById("signupModal");
+    const signupButton = document.getElementById("signupButton");
+    const closeSignupButton = document.getElementById("closeSignup");
+
+    signupButton.addEventListener("click", () => {
+      signupModal.classList.add("open");
+      document.getElementById("signupFirstName").focus();
+    });
+
+    function closeSignupModal() {
+      signupModal.classList.remove("open");
+    }
+
+    closeSignupButton.addEventListener("click", closeSignupModal);
+
+    signupModal.addEventListener("click", event => {
+      if (event.target === signupModal) {
+        closeSignupModal();
+      }
+    });
+
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape") {
+        closeSignupModal();
+      }
+    });
+
 
 
   </script>
