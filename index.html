@@ -1322,20 +1322,52 @@ document.getElementById("signupForm").addEventListener("submit", async (event) =
       professionalSubmit.textContent = "Enregistrement...";
 
       try {
-        const { error } = await supabaseClient
+       
+      const companyData = {
+        business_name: document.getElementById("businessName").value.trim(),
+        trade: document.getElementById("businessTrade").value,
+        city: document.getElementById("businessCity").value.trim(),
+        postal_code: document.getElementById("businessPostalCode").value.trim(),
+        address: document.getElementById("businessAddress").value.trim(),
+        description: document.getElementById("businessDescription").value.trim()
+      };
+
+      const { data: existingCompany, error: searchError } =
+        await supabaseClient
+          .from("professionals")
+          .select("id, is_active")
+          .eq("profile_id", user.id)
+          .maybeSingle();
+
+      if (searchError) throw searchError;
+
+      if (existingCompany) {
+        if (existingCompany.is_active) {
+          throw new Error(
+            "Cette fiche est publiée. Sa modification nécessite une procédure spécifique."
+          );
+        }
+
+        const { error: updateError } = await supabaseClient
+          .from("professionals")
+          .update(companyData)
+          .eq("id", existingCompany.id)
+          .eq("profile_id", user.id)
+          .eq("is_active", false);
+
+        if (updateError) throw updateError;
+
+      } else {
+        const { error: insertError } = await supabaseClient
           .from("professionals")
           .insert({
             profile_id: user.id,
-            business_name: document.getElementById("businessName").value.trim(),
-            trade: document.getElementById("businessTrade").value,
-            city: document.getElementById("businessCity").value.trim(),
-            postal_code: document.getElementById("businessPostalCode").value.trim(),
-            address: document.getElementById("businessAddress").value.trim(),
-            description: document.getElementById("businessDescription").value.trim(),
+            ...companyData,
             is_active: false
           });
 
-        if (error) throw error;
+        if (insertError) throw insertError;
+      }
 
         professionalForm.reset();
         closeProfessionalModal();
