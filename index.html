@@ -543,6 +543,45 @@
   </div>
 </div>
 
+<!-- Espace personnel FIX -->
+<div class="modal-backdrop" id="accountModal"
+     role="dialog" aria-modal="true"
+     aria-labelledby="accountTitle">
+  <div class="modal">
+    <div class="modal-head">
+      <div>
+        <div class="eyebrow">MON ESPACE FIX</div>
+        <h2 id="accountTitle">Mon compte</h2>
+      </div>
+      <button class="close" id="closeAccount"
+              type="button" aria-label="Fermer">×</button>
+    </div>
+
+    <p class="muted small">
+      Bienvenue dans votre espace personnel.
+    </p>
+
+    <div class="form-grid">
+      <div>
+        <label>Adresse e-mail</label>
+        <p id="accountEmail" class="muted">Chargement...</p>
+      </div>
+
+      <div>
+        <label>Mes rendez-vous</label>
+        <p class="muted small">
+          Vos prochains rendez-vous apparaîtront ici.
+        </p>
+      </div>
+
+      <button class="btn btn-light" type="button"
+              id="logoutButton">
+        Se déconnecter
+      </button>
+    </div>
+  </div>
+</div>
+
 <!-- Fenêtre de connexion FIX -->
 <div class="modal-backdrop" id="loginModal"
      role="dialog" aria-modal="true"
