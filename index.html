@@ -1196,6 +1196,29 @@ document.getElementById("signupForm").addEventListener("submit", async (event) =
         }
       });
 
+    // Affichage du bouton Mon compte FIX
+    const accountButton = document.getElementById("accountButton");
+
+    async function updateAccountButton() {
+      const { data: { session } } = await supabaseClient.auth.getSession();
+
+      if (session) {
+        accountButton.style.display = "inline-flex";
+        document.getElementById("loginButton").style.display = "none";
+        document.getElementById("signupButton").style.display = "none";
+      } else {
+        accountButton.style.display = "none";
+        document.getElementById("loginButton").style.display = "inline-flex";
+        document.getElementById("signupButton").style.display = "inline-flex";
+      }
+    }
+
+    updateAccountButton();
+
+    supabaseClient.auth.onAuthStateChange(() => {
+      setTimeout(updateAccountButton, 0);
+    });
+
     // Connexion des utilisateurs FIX
     const loginModal = document.getElementById("loginModal");
     const loginButton = document.getElementById("loginButton");
