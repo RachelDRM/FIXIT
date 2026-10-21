@@ -1037,6 +1037,46 @@ document.getElementById("signupForm").addEventListener("submit", async (event) =
   }
 });
 
+    // Réinitialisation du mot de passe FIX
+    document.getElementById("forgotPasswordButton")
+      .addEventListener("click", async () => {
+
+        const email = document.getElementById("loginEmail").value.trim();
+
+        if (!email) {
+          alert("Veuillez d'abord saisir votre adresse e-mail.");
+          document.getElementById("loginEmail").focus();
+          return;
+        }
+
+        const button = document.getElementById("forgotPasswordButton");
+        button.disabled = true;
+        button.textContent = "Envoi en cours...";
+
+        try {
+          const { error } = await supabaseClient.auth.resetPasswordForEmail(
+            email,
+            {
+              redirectTo: "https://racheldrm.github.io/FIXIT/"
+            }
+          );
+
+          if (error) throw error;
+
+          alert(
+            "Si un compte est associé à cette adresse, " +
+            "vous recevrez un e-mail pour réinitialiser votre mot de passe."
+          );
+
+        } catch (error) {
+          alert("Impossible d'envoyer l'e-mail : " + error.message);
+
+        } finally {
+          button.disabled = false;
+          button.textContent = "Mot de passe oublié ?";
+        }
+      });
+
     // Connexion des utilisateurs FIX
     const loginModal = document.getElementById("loginModal");
     const loginButton = document.getElementById("loginButton");
