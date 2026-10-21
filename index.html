@@ -491,6 +491,44 @@
     </div>
   </div>
 
+<!-- Fenêtre de connexion FIX -->
+<div class="modal-backdrop" id="loginModal"
+     role="dialog" aria-modal="true"
+     aria-labelledby="loginTitle">
+  <div class="modal">
+    <div class="modal-head">
+      <div>
+        <div class="eyebrow">Bienvenue sur FIX</div>
+        <h2 id="loginTitle">Se connecter</h2>
+      </div>
+      <button class="close" id="closeLogin"
+              type="button" aria-label="Fermer">×</button>
+    </div>
+
+    <p class="muted small">
+      Retrouvez vos rendez-vous et votre espace personnel.
+    </p>
+
+    <form id="loginForm" class="form-grid">
+      <div>
+        <label for="loginEmail">Adresse e-mail</label>
+        <input id="loginEmail" type="email"
+               autocomplete="email" required>
+      </div>
+
+      <div>
+        <label for="loginPassword">Mot de passe</label>
+        <input id="loginPassword" type="password"
+               autocomplete="current-password" required>
+      </div>
+
+      <button class="btn" type="submit">
+        Se connecter
+      </button>
+    </form>
+  </div>
+</div>
+
 <!-- Fenêtre d'inscription FIX -->
 <div class="modal-backdrop" id="signupModal"
      role="dialog" aria-modal="true"
