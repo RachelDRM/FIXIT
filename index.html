@@ -1235,6 +1235,64 @@ document.getElementById("signupForm").addEventListener("submit", async (event) =
         }
       });
 
+    // Espace personnel FIX
+    const accountModal = document.getElementById("accountModal");
+    const closeAccountButton = document.getElementById("closeAccount");
+    const logoutButton = document.getElementById("logoutButton");
+
+    document.getElementById("accountButton")
+      .addEventListener("click", async () => {
+        const { data: { user }, error } =
+          await supabaseClient.auth.getUser();
+
+        if (error || !user) {
+          alert("Veuillez vous connecter pour accéder à votre compte.");
+          return;
+        }
+
+        document.getElementById("accountEmail").textContent = user.email;
+        accountModal.classList.add("open");
+      });
+
+    function closeAccountModal() {
+      accountModal.classList.remove("open");
+    }
+
+    closeAccountButton.addEventListener("click", closeAccountModal);
+
+    accountModal.addEventListener("click", event => {
+      if (event.target === accountModal) {
+        closeAccountModal();
+      }
+    });
+
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape") {
+        closeAccountModal();
+      }
+    });
+
+    logoutButton.addEventListener("click", async () => {
+      logoutButton.disabled = true;
+      logoutButton.textContent = "Déconnexion...";
+
+      try {
+        const { error } = await supabaseClient.auth.signOut();
+
+        if (error) throw error;
+
+        closeAccountModal();
+        await updateAccountButton();
+
+        alert("Vous êtes maintenant déconnecté de FIX.");
+      } catch (error) {
+        alert("Déconnexion impossible : " + error.message);
+      } finally {
+        logoutButton.disabled = false;
+        logoutButton.textContent = "Se déconnecter";
+      }
+    });
+
     // Affichage du bouton Mon compte FIX
     const accountButton = document.getElementById("accountButton");
 
