@@ -491,6 +491,52 @@
     </div>
   </div>
 
+<!-- Fenêtre de nouveau mot de passe FIX -->
+<div class="modal-backdrop" id="resetPasswordModal"
+     role="dialog" aria-modal="true"
+     aria-labelledby="resetPasswordTitle">
+  <div class="modal">
+    <div class="modal-head">
+      <div>
+        <div class="eyebrow">SÉCURITÉ DU COMPTE FIX</div>
+        <h2 id="resetPasswordTitle">Nouveau mot de passe</h2>
+      </div>
+      <button class="close" id="closeResetPassword"
+              type="button" aria-label="Fermer">×</button>
+    </div>
+
+    <p class="muted small">
+      Choisissez un nouveau mot de passe pour votre compte.
+    </p>
+
+    <form id="resetPasswordForm" class="form-grid">
+      <div>
+        <label for="newPassword">Nouveau mot de passe</label>
+        <input id="newPassword"
+               type="password"
+               minlength="8"
+               autocomplete="new-password"
+               required>
+      </div>
+
+      <div>
+        <label for="confirmNewPassword">
+          Confirmer le nouveau mot de passe
+        </label>
+        <input id="confirmNewPassword"
+               type="password"
+               minlength="8"
+               autocomplete="new-password"
+               required>
+      </div>
+
+      <button class="btn" type="submit" disabled>
+        Enregistrer mon nouveau mot de passe
+      </button>
+    </form>
+  </div>
+</div>
+
 <!-- Fenêtre de connexion FIX -->
 <div class="modal-backdrop" id="loginModal"
      role="dialog" aria-modal="true"
