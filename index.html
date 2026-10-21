@@ -543,6 +543,67 @@
   </div>
 </div>
 
+<!-- Formulaire professionnel FIX -->
+<div class="modal-backdrop" id="professionalModal"
+     role="dialog" aria-modal="true"
+     aria-labelledby="professionalTitle">
+  <div class="modal">
+    <div class="modal-head">
+      <div>
+        <div class="eyebrow">FIX POUR LES PROFESSIONNELS</div>
+        <h2 id="professionalTitle">Mon entreprise</h2>
+      </div>
+      <button class="close" id="closeProfessional"
+              type="button" aria-label="Fermer">×</button>
+    </div>
+
+    <p class="muted small">
+      Présentez votre activité et préparez votre fiche professionnelle.
+    </p>
+
+    <form id="professionalForm" class="form-grid">
+      <div>
+        <label for="businessName">Nom de l'entreprise</label>
+        <input id="businessName" type="text" required>
+      </div>
+
+      <div>
+        <label for="businessTrade">Votre métier</label>
+        <select id="businessTrade" required>
+          <option value="">Sélectionnez votre métier</option>
+          <option value="plumber">Plombier</option>
+          <option value="electrician">Électricien</option>
+          <option value="painter">Peintre</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="businessCity">Ville</label>
+        <input id="businessCity" type="text" required>
+      </div>
+
+      <div>
+        <label for="businessPostalCode">Code postal</label>
+        <input id="businessPostalCode" type="text" required>
+      </div>
+
+      <div>
+        <label for="businessAddress">Adresse professionnelle</label>
+        <input id="businessAddress" type="text">
+      </div>
+
+      <div>
+        <label for="businessDescription">Présentation de votre activité</label>
+        <textarea id="businessDescription" rows="4"></textarea>
+      </div>
+
+      <button class="btn" type="submit" disabled>
+        Enregistrer mon entreprise
+      </button>
+    </form>
+  </div>
+</div>
+
 <!-- Espace personnel FIX -->
 <div class="modal-backdrop" id="accountModal"
      role="dialog" aria-modal="true"
