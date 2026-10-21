@@ -1301,6 +1301,42 @@ document.getElementById("signupForm").addEventListener("submit", async (event) =
         }
       });
 
+    // Ouverture du formulaire professionnel FIX
+    const professionalModal = document.getElementById("professionalModal");
+    const openProfessionalButton = document.getElementById("openProfessionalButton");
+    const closeProfessionalButton = document.getElementById("closeProfessional");
+
+    openProfessionalButton.addEventListener("click", async () => {
+      const { data: { user }, error } = await supabaseClient.auth.getUser();
+
+      if (error || !user) {
+        alert("Veuillez vous connecter pour accéder à cet espace.");
+        return;
+      }
+
+      document.getElementById("accountModal").classList.remove("open");
+      professionalModal.classList.add("open");
+      document.getElementById("businessName").focus();
+    });
+
+    function closeProfessionalModal() {
+      professionalModal.classList.remove("open");
+    }
+
+    closeProfessionalButton.addEventListener("click", closeProfessionalModal);
+
+    professionalModal.addEventListener("click", event => {
+      if (event.target === professionalModal) {
+        closeProfessionalModal();
+      }
+    });
+
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape") {
+        closeProfessionalModal();
+      }
+    });
+
     // Espace personnel FIX
     const accountModal = document.getElementById("accountModal");
     const closeAccountButton = document.getElementById("closeAccount");
