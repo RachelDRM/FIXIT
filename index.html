@@ -1362,6 +1362,7 @@ document.getElementById("signupForm").addEventListener("submit", async (event) =
     const openProfessionalButton = document.getElementById("openProfessionalButton");
     const closeProfessionalButton = document.getElementById("closeProfessional");
 
+   
     openProfessionalButton.addEventListener("click", async () => {
       const { data: { user }, error } = await supabaseClient.auth.getUser();
 
@@ -1370,10 +1371,40 @@ document.getElementById("signupForm").addEventListener("submit", async (event) =
         return;
       }
 
+      const { data: company, error: companyError } = await supabaseClient
+        .from("professionals")
+        .select("*")
+        .eq("profile_id", user.id)
+        .maybeSingle();
+
+      if (companyError) {
+        alert("Impossible de charger votre entreprise : " + companyError.message);
+        return;
+      }
+
+      const form = document.getElementById("professionalForm");
+      form.reset();
+
+      if (company) {
+        document.getElementById("businessName").value = company.business_name || "";
+        document.getElementById("businessTrade").value = company.trade || "";
+        document.getElementById("businessCity").value = company.city || "";
+        document.getElementById("businessPostalCode").value = company.postal_code || "";
+        document.getElementById("businessAddress").value = company.address || "";
+        document.getElementById("businessDescription").value = company.description || "";
+
+        document.getElementById("professionalTitle").textContent =
+          "Modifier mon entreprise";
+      } else {
+        document.getElementById("professionalTitle").textContent =
+          "Mon entreprise";
+      }
+
       document.getElementById("accountModal").classList.remove("open");
       professionalModal.classList.add("open");
       document.getElementById("businessName").focus();
     });
+
 
     function closeProfessionalModal() {
       professionalModal.classList.remove("open");
