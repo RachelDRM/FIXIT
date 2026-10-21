@@ -1301,6 +1301,62 @@ document.getElementById("signupForm").addEventListener("submit", async (event) =
         }
       });
 
+    // Enregistrement des entreprises FIX
+    const professionalForm = document.getElementById("professionalForm");
+    const professionalSubmit = professionalForm.querySelector('button[type="submit"]');
+
+    professionalSubmit.disabled = false;
+
+    professionalForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      const { data: { user }, error: authError } =
+        await supabaseClient.auth.getUser();
+
+      if (authError || !user) {
+        alert("Veuillez vous connecter pour enregistrer votre entreprise.");
+        return;
+      }
+
+      professionalSubmit.disabled = true;
+      professionalSubmit.textContent = "Enregistrement...";
+
+      try {
+        const { error } = await supabaseClient
+          .from("professionals")
+          .insert({
+            profile_id: user.id,
+            business_name: document.getElementById("businessName").value.trim(),
+            trade: document.getElementById("businessTrade").value,
+            city: document.getElementById("businessCity").value.trim(),
+            postal_code: document.getElementById("businessPostalCode").value.trim(),
+            address: document.getElementById("businessAddress").value.trim(),
+            description: document.getElementById("businessDescription").value.trim(),
+            is_active: false
+          });
+
+        if (error) throw error;
+
+        professionalForm.reset();
+        closeProfessionalModal();
+
+        alert(
+          "Votre fiche professionnelle a été enregistrée ! " +
+          "Elle restera invisible au public jusqu'à sa validation."
+        );
+
+      } catch (error) {
+        if (error.code === "23505") {
+          alert("Une fiche professionnelle existe déjà pour ce compte.");
+        } else {
+          alert("Enregistrement impossible : " + error.message);
+        }
+      } finally {
+        professionalSubmit.disabled = false;
+        professionalSubmit.textContent = "Enregistrer mon entreprise";
+      }
+    });
+
     // Ouverture du formulaire professionnel FIX
     const professionalModal = document.getElementById("professionalModal");
     const openProfessionalButton = document.getElementById("openProfessionalButton");
