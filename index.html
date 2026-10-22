@@ -1372,10 +1372,13 @@ document.getElementById("signupForm").addEventListener("submit", async (event) =
         professionalForm.reset();
         closeProfessionalModal();
 
-        alert(
-          "Votre fiche professionnelle a été enregistrée ! " +
-          "Elle restera invisible au public jusqu'à sa validation."
-        );
+      
+alert(
+  existingCompany
+    ? "Les informations de votre entreprise ont été mises à jour."
+    : "Votre entreprise a été enregistrée ! Elle est en attente de validation."
+);
+
 
       } catch (error) {
         if (error.code === "23505") {
