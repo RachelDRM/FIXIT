@@ -1450,6 +1450,73 @@ alert(
       }
     });
 
+    // Enregistrement des prestations FIX
+    const servicesForm = document.getElementById("servicesForm");
+    const servicesSubmit = servicesForm.querySelector('button[type="submit"]');
+
+    servicesSubmit.disabled = false;
+
+    servicesForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      servicesSubmit.disabled = true;
+      servicesSubmit.textContent = "Enregistrement...";
+
+      try {
+        const { data: { user }, error: authError } =
+          await supabaseClient.auth.getUser();
+
+        if (authError || !user) {
+          throw new Error("Veuillez vous connecter.");
+        }
+
+        const { data: company, error: companyError } =
+          await supabaseClient
+            .from("professionals")
+            .select("id")
+            .eq("profile_id", user.id)
+            .maybeSingle();
+
+        if (companyError) throw companyError;
+
+        if (!company) {
+          throw new Error("Veuillez d'abord créer votre entreprise.");
+        }
+
+        const name = document.getElementById("serviceName").value.trim();
+        const description = document.getElementById("serviceDescription").value.trim();
+        const duration = Number(document.getElementById("serviceDuration").value);
+        const priceInput = document.getElementById("servicePrice").value;
+
+        if (!name || !Number.isInteger(duration) || duration < 15) {
+          throw new Error("Vérifiez le nom et la durée de la prestation.");
+        }
+
+        const { error: insertError } = await supabaseClient
+          .from("services")
+          .insert({
+            professional_id: company.id,
+            name: name,
+            description: description,
+            duration_minutes: duration,
+            price: priceInput === "" ? null : Number(priceInput),
+            is_active: false
+          });
+
+        if (insertError) throw insertError;
+
+        servicesForm.reset();
+
+        alert("Votre prestation a été enregistrée en attente de validation.");
+
+      } catch (error) {
+        alert("Enregistrement impossible : " + error.message);
+      } finally {
+        servicesSubmit.disabled = false;
+        servicesSubmit.textContent = "Ajouter cette prestation";
+      }
+    });
+
     // Ouverture de la fenêtre Mes prestations FIX
     const servicesModal = document.getElementById("servicesModal");
     const openServicesButton = document.getElementById("openServicesButton");
