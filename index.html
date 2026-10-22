@@ -1450,6 +1450,60 @@ alert(
       }
     });
 
+    // Ouverture de la fenêtre Mes prestations FIX
+    const servicesModal = document.getElementById("servicesModal");
+    const openServicesButton = document.getElementById("openServicesButton");
+    const closeServicesButton = document.getElementById("closeServices");
+
+    openServicesButton.addEventListener("click", async () => {
+      const { data: { user }, error } =
+        await supabaseClient.auth.getUser();
+
+      if (error || !user) {
+        alert("Veuillez vous connecter pour accéder à vos prestations.");
+        return;
+      }
+
+      const { data: company, error: companyError } =
+        await supabaseClient
+          .from("professionals")
+          .select("id")
+          .eq("profile_id", user.id)
+          .maybeSingle();
+
+      if (companyError) {
+        alert("Impossible de vérifier votre entreprise : " + companyError.message);
+        return;
+      }
+
+      if (!company) {
+        alert("Veuillez d'abord créer votre fiche dans Mon entreprise.");
+        return;
+      }
+
+      document.getElementById("accountModal").classList.remove("open");
+      servicesModal.classList.add("open");
+      document.getElementById("serviceName").focus();
+    });
+
+    function closeServicesModal() {
+      servicesModal.classList.remove("open");
+    }
+
+    closeServicesButton.addEventListener("click", closeServicesModal);
+
+    servicesModal.addEventListener("click", event => {
+      if (event.target === servicesModal) {
+        closeServicesModal();
+      }
+    });
+
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape") {
+        closeServicesModal();
+      }
+    });
+
     // Ouverture du formulaire professionnel FIX
     const professionalModal = document.getElementById("professionalModal");
     const openProfessionalButton = document.getElementById("openProfessionalButton");
