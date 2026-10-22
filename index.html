@@ -543,6 +543,59 @@
   </div>
 </div>
 
+<!-- Fenêtre des prestations FIX -->
+<div class="modal-backdrop" id="servicesModal"
+     role="dialog" aria-modal="true"
+     aria-labelledby="servicesTitle">
+  <div class="modal">
+    <div class="modal-head">
+      <div>
+        <div class="eyebrow">FIX POUR LES PROFESSIONNELS</div>
+        <h2 id="servicesTitle">Mes prestations</h2>
+      </div>
+      <button class="close" id="closeServices"
+              type="button" aria-label="Fermer">×</button>
+    </div>
+
+    <p class="muted small">
+      Ajoutez les prestations que vous souhaitez proposer à vos clients.
+    </p>
+
+    <form id="servicesForm" class="form-grid">
+      <div>
+        <label for="serviceName">Nom de la prestation</label>
+        <input id="serviceName" type="text"
+               placeholder="Ex. : Dépannage électrique" required>
+      </div>
+
+      <div>
+        <label for="serviceDescription">Description</label>
+        <textarea id="serviceDescription" rows="3"
+                  placeholder="Décrivez votre intervention"></textarea>
+      </div>
+
+      <div>
+        <label for="serviceDuration">Durée estimée (minutes)</label>
+        <input id="serviceDuration" type="number"
+               min="15" step="15" value="60" required>
+      </div>
+
+      <div>
+        <label for="servicePrice">Tarif (€)</label>
+        <input id="servicePrice" type="number"
+               min="0" step="0.01"
+               placeholder="Ex. : 75">
+      </div>
+
+      <button class="btn" type="submit" disabled>
+        Ajouter cette prestation
+      </button>
+    </form>
+
+    <div id="servicesList"></div>
+  </div>
+</div>
+
 <!-- Formulaire professionnel FIX -->
 <div class="modal-backdrop" id="professionalModal"
      role="dialog" aria-modal="true"
